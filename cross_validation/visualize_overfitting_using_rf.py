@@ -5,30 +5,11 @@ import pandas as pd
 import seaborn as sns
 from sklearn import metrics, tree
 
-TARGET_VALUE_MAPPING = {
-    3: 0,
-    4: 1,
-    5: 2,
-    6: 3,
-    7: 4,
-    8: 5
-}
-FEATURE_COLUMNS = [
-    'fixed acidity',
-    'volatile acidity',
-    'citric acid',
-    'residual sugar',
-    'chlorides',
-    'free sulfur dioxide',
-    'total sulfur dioxide',
-    'density',
-    'pH',
-    'sulphates',
-    'alcohol'
-]
-TARGET_COLUMN = 'quality'
-
-
+from cross_validation.config import (
+    FEATURE_COLUMNS,
+    TARGET_COLUMN, TARGET_VALUE_MAPPING,
+    WINE_DATASET_PATH
+)
 def runner():
     df = _load_data()
     df_train, df_test = _train_test_split(df)
@@ -39,7 +20,7 @@ def runner():
 
 
 def _load_data() -> pd.DataFrame:
-    df = pd.read_csv('cross_validation/input/winequality-red.csv')
+    df = pd.read_csv(WINE_DATASET_PATH)
     df.loc[:, TARGET_COLUMN] = df[TARGET_COLUMN].map(TARGET_VALUE_MAPPING)
     return df
 
